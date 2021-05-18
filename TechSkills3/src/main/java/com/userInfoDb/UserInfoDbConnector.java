@@ -6,21 +6,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+/**
+ * This class manages the connection between the mysql db and the java servlet
+ * @author macsh
+ *
+ */
 public class UserInfoDbConnector {
+	//TODO: Future implementation should not have hardcoded global variables, better to put it in config file
    private String dbUrl="jdbc:mysql://127.0.0.1:3306/userinfo";
    private String dbUserName="root";
    private String dbPassword="traveler";
-	   
-   public void createDB() throws ClassNotFoundException, SQLException {
-	   Connection conn = this.getConnection();
-	   Statement stmt = conn.createStatement();
-	   String sql = "CREATE DATABASE userInfoDb";
-	   stmt.executeUpdate(sql);
-	   System.out.println("Database created successfully...");   	
-	   stmt.close();
-	   conn.close();
-   }
+   /**
+    * Connects to DB and throws an error if it is not successful
+    * @return
+    * @throws ClassNotFoundException
+    * @throws SQLException
+    */
    public Connection getConnection() throws ClassNotFoundException, SQLException {
 	   String dbDriver = "com.mysql.cj.jdbc.Driver";
 	   Class.forName(dbDriver);
@@ -29,6 +30,13 @@ public class UserInfoDbConnector {
 	   System.out.println(conn.getMetaData());
 	   return conn;
    }
+   /**
+    * Runs SQL query to check user does not already exist
+    * @param name
+    * @param conn
+    * @return
+    * @throws SQLException
+    */
    public boolean doesUserExist(String name, Connection conn) throws SQLException {
 	   String sql =  "SELECT * FROM userInfoDb WHERE name=?;";
 	   PreparedStatement stmt = conn.prepareStatement(sql);
@@ -42,7 +50,7 @@ public class UserInfoDbConnector {
 	   
    }
    /**
-    * 
+    * Adds new user info to DB
     * @return
     * @throws SQLException
  * @throws ClassNotFoundException 

@@ -26,6 +26,15 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SaveUserInfoApp extends HttpServlet{
 	private UserInfoDbConnector dbConnect;
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Validates user info from form
+	 * @param name
+	 * @param email
+	 * @param address
+	 * @param phone
+	 * @param budget
+	 * @return
+	 */
 	public boolean isUserInfoValid(String name, String email, String address, String phone, String budget) {
 		if(name==null||name.isBlank()||email==null||email.isBlank()||address==null||address.isBlank()||phone==null||phone.isBlank()||budget==null||budget.isBlank())
 			return false;
@@ -44,7 +53,7 @@ public class SaveUserInfoApp extends HttpServlet{
 		String phone = req.getParameter("phone");
 		String budget = req.getParameter("budget");
 		
-		
+		//after checking user input validity, insert new user into database if it exists
 		String postResult="";
 		if(this.isUserInfoValid(name,email,address,phone,budget)) {
 			
@@ -56,27 +65,24 @@ public class SaveUserInfoApp extends HttpServlet{
 					postResult=this.dbConnect.insertUserInfo(name, email, address, phone, budget);
 				} catch (SQLException e) {
 					e.printStackTrace();
+					postResult=e.getMessage();
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
+					postResult=e.getMessage();
 				}
 			}			
 		}
 		else {
 			postResult="User input invalid.";
 		}
+		
 		req.setAttribute("result", postResult);
 		RequestDispatcher view = req.getRequestDispatcher("userInfo.jsp");
 		try {
 			view.include(req, res);
+			view.forward(req, res);
 		} catch (ServletException | IOException e1) {
 			e1.printStackTrace();
-		}
-		
-
-		try {
-			view.forward(req, res);
-		} catch (ServletException | IOException e) {
-			e.printStackTrace();
 			PrintWriter out = res.getWriter();
 			out.println("There was a server error.");
 			out.println(postResult);
