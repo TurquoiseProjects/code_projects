@@ -1,0 +1,9 @@
+Prioritize the following list according to how you develop applications/websites and explain why you chose 
+the order you did:
+
+1. Separation of Concerns
+2. Rapid Development
+3. Application/Site Performance
+4. Maintainability
+
+The reason for this prioritization is that each item leads into the next.  Proper code separation enables rapid development because it enables better unit tests and faster debug.  Both #1 & #2 enable better app performance because both are key to better programming design and practices, which affects performance implicitly.  Finally, maintainability is important to the application, but cannot be achieved without using the best code practices, which are part of #1,2, and #3.
