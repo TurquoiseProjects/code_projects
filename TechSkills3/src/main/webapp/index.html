@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Tech Skills 3</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>User Input Form</h1>
+	<!-- Assumption for forms
+	Names are roman characters only, would need to update for international users
+	Emails can contain roman characters, numbers, and some special characters
+	Address may contain letters and numbers only
+	Phone must be numbers only
+	Budget can be numbers, letters, and some special characters
+	 -->
+	<form class="form" action="save-form" method="POST">
+		<label for="userName">Name: </label><input type="text" name="userName" id="userName" pattern="^[a-zA-Z ]+$" title="Name must be only characters." required/><br/>
+		<label for="email">Email: </label><input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required/><br/>
+		<label for="address">Address: </label><input type="text" name="address" id="address" pattern="^[a-zA-Z0-9 ]+$" required/><br/>
+		<label for="phone">Phone #: </label><input type="tel" name="phone" id="phone" pattern="^[0-9-]+$" required/><br/>
+		<label for="budget">Budget: </label><input type="text" name="budget" id="budget" pattern="^[a-zA-Z0-9- ]+$" required/><br/>
+		<input type="submit" value="Submit"/>
+	</form>
+</body>
+</html>
